@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Friends</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button routerLink="/addfriend"><ion-icon name="person-add" ></ion-icon></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let fren of friend">
+      <ion-label>{{fren.username}}</ion-label>
+      <ion-label>{{fren.birthdate}}</ion-label>
+      <ion-button (click)="delete(fren.key)"><ion-icon name="trash"></ion-icon></ion-button>
+    </ion-item>
+  </ion-list>
+</ion-content>

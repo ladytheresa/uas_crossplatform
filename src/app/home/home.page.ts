@@ -7,6 +7,13 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
-  constructor() {}
+  userUID:any;
+
+  constructor(
+  ) {}
+
+  ngOnInit(){    
+    
+  }
 
 }

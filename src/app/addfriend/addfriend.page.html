@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Add a friend</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button (click)="back()"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form class="form" [formGroup]="validation_form" (ngSubmit)="setFilteredItems()">
+    <ion-item>
+      <ion-label position="floating" color="black">Search</ion-label>
+      <ion-input type="text" formControlName="search" class="form-control" required placeholder="Insert username..."></ion-input>
+    </ion-item>
+    <div class="validation-error">
+      <div *ngFor="let validation of validation_messages.search">
+        <div class="error-message" style="padding: 15px; color: red;"
+        *ngIf="validation_form.get('search').hasError(validation.type) && (validation_form.get('search').dirty || validation_form.get('search').touched)">
+          {{validation.message}}
+        </div>
+      </div>
+    </div>
+  
+    <ion-button class="submit-btn" type="submit" [disabled]="!validation_form.valid" expand="block">Search</ion-button>
+    <label class="error-message">{{errorMessage}}</label>
+  </form>
+  <div class="container" *ngIf="userlist!=null">
+    <div *ngFor="let user of userlist; index as i;">
+    <ion-item lines="none"><ion-label>{{user.username}}</ion-label>
+    <ion-button (click)="addFriend(user.key)"><ion-icon name="person-add-outline"></ion-icon></ion-button>
+  </ion-item>
+    </div>
+    <ion-item lines="none" *ngIf="userlist.length==0">No person with that username found :(</ion-item>
+  </div>
+  <ion-item lines="none" *ngIf="userlist==null">Search for a friend :)</ion-item>
+</ion-content>
