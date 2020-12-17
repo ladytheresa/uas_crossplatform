@@ -42,8 +42,13 @@ export class FriendsPage implements OnInit {
     });
   }
 
-  delete(key){
-    console.log(key);
-    this.db.object('/friends/'+this.userUID+'/'+ key).remove();
+  delete(fren){
+    console.log(fren.key);
+    this.db.object('/friends/'+this.userUID+'/'+ fren.key).remove();
   }
+  addPage(){
+    this.navCtrl.navigateForward('/addfriend');
+  }
+  refresh(): void { window.location.reload(); }
+
 }

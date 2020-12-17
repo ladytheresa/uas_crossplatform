@@ -46,7 +46,7 @@ export class ProfilePage implements OnInit {
           ))
         ).subscribe(data => {
           this.location = data;
-          console.log(this.location);
+          //console.log(this.location);
         });
     
       } else {

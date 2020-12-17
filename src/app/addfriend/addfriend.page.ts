@@ -75,7 +75,7 @@ export class AddfriendPage implements OnInit {
     }
 
     back(){
-
+      this.navCtrl.navigateBack('/home/tabs/friends');
     }
 
     addFriend(key){

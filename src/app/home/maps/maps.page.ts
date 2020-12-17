@@ -51,7 +51,8 @@ export class MapsPage implements OnInit {
           if(this.friends==null||this.friends.length==0){
             return
           }
-            this.firebaseServ.getLastLocation(this.userUID).snapshotChanges().pipe(
+          for(let friend of this.friends){
+            this.firebaseServ.getLastLocation(friend.key).snapshotChanges().pipe(
               map(changes => changes.map(
                 c => ({
                   key: c.payload.key, ...c.payload.val()
@@ -62,7 +63,6 @@ export class MapsPage implements OnInit {
               console.log(this.location);
 
               for(let loc of this.location){
-                for(let friend of this.friends){
                 this.fLat = loc.lat;
                 this.fLng = loc.lng;
                 if(navigator.geolocation){
@@ -80,11 +80,11 @@ export class MapsPage implements OnInit {
                     map:this.map
                   })   
               }  
-                }
+                
               }
               
             });
-          
+            }
         });     
       } else {
         this.navCtrl.navigateBack('/login');

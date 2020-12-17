@@ -14,10 +14,12 @@
   <ion-item lines="none">Birthdate: {{this.birthdate}}</ion-item>
 </div>
 <ion-list>
-  <ion-item style="margin-top: 10px;" lines="none" *ngFor="let loc of location">
-    <ion-item lines="none">Last known coordinates: {{loc.lat}}, {{loc.lng}}</ion-item>
-    <ion-button (click)="deleteLoc(loc)">Delete</ion-button>
+  <ion-item lines="none" *ngFor="let loc of location">
+    <ion-item lines="none" *ngIf="location.length!=0" style="margin-top: 10px;" >Last check in: {{loc.lat}}, {{loc.lng}}</ion-item>
+    <ion-button (click)="deleteLoc(loc)"><ion-icon name="trash"></ion-icon></ion-button>
   </ion-item>
+  <ion-item lines="none" *ngIf="location.length==0 || location==null || location==undefined">Last check in: none</ion-item>
+
   <ion-item lines="none">Kesan pesan singkat: halo ^^</ion-item>
 </ion-list>
 </ion-content>
