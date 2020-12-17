@@ -43,6 +43,7 @@ export class FriendsPage implements OnInit {
   }
 
   delete(key){
+    console.log(key);
     this.db.object('/friends/'+this.userUID+'/'+ key).remove();
   }
 }

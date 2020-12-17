@@ -14,5 +14,6 @@
       <ion-label>{{fren.birthdate}}</ion-label>
       <ion-button (click)="delete(fren.key)"><ion-icon name="trash"></ion-icon></ion-button>
     </ion-item>
+    <ion-item lines="none" *ngIf="friend==null||friend.length==0">No friends yet, go add one! ^^</ion-item>
   </ion-list>
 </ion-content>

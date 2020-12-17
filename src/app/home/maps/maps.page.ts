@@ -15,6 +15,8 @@ export class MapsPage implements OnInit {
   userUID:any;
   lat:any;
   lng:any;
+  fLat:any;
+  fLng;
   friends:any;
   location:any;
 
@@ -49,21 +51,25 @@ export class MapsPage implements OnInit {
           if(this.friends==null||this.friends.length==0){
             return
           }
-          this.firebaseServ.getLastLocation(this.userUID).snapshotChanges().pipe(
-            map(changes => changes.map(
-              c => ({
-                key: c.payload.key, ...c.payload.val()
-              })
-            ))
-          ).subscribe(data => {
-            this.location = data;
-            console.log(this.location);
-            for(let friend of this.friends){
+            this.firebaseServ.getLastLocation(this.userUID).snapshotChanges().pipe(
+              map(changes => changes.map(
+                c => ({
+                  key: c.payload.key, ...c.payload.val()
+                })
+              ))
+            ).subscribe(data => {
+              this.location = data;
+              console.log(this.location);
+
               for(let loc of this.location){
+                for(let friend of this.friends){
+                this.fLat = loc.lat;
+                this.fLng = loc.lng;
                 if(navigator.geolocation){
+                  console.log(friend);
                   const pos = {
-                    lat:loc.lat,
-                    lng:loc.lng
+                    lat:this.fLat,
+                    lng:this.fLng
                   };
                   console.log(pos);
                   const marker = new google.maps.Marker({
@@ -72,16 +78,13 @@ export class MapsPage implements OnInit {
                     title:friend.username,
                     label:friend.username,
                     map:this.map
-                  })
-                  //this.infoWindow.setPosition(pos);
-                  //this.infoWindow.setContent(friend.username);
-                  //this.infoWindow.open(this.map);
+                  })   
+              }  
+                }
               }
-              }
-            }
-          });
+              
+            });
           
-
         });     
       } else {
         this.navCtrl.navigateBack('/login');
@@ -110,6 +113,7 @@ export class MapsPage implements OnInit {
         this.centered=true;
       });
     }
+    this.confirm();
 
   }
 
@@ -134,6 +138,7 @@ export class MapsPage implements OnInit {
       this.firebaseServ.checkIn(obj, this.userUID).then(res => {
       }).catch(error => console.log(error));
       this.centered=false;
+      this.checkedIn();
     }else
     this.presentToast();
   }
@@ -146,5 +151,20 @@ export class MapsPage implements OnInit {
     toast.present();
   }
 
+  async confirm() {
+    const toast = await this.toast.create({
+      message: 'You have confirmed your location!',
+      duration: 2000
+    });
+    toast.present();
+  }
+
+  async checkedIn() {
+    const toast = await this.toast.create({
+      message: 'You have checked in!',
+      duration: 2000
+    });
+    toast.present();
+  }
 
 }

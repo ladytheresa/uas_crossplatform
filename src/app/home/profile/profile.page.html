@@ -9,12 +9,16 @@
 
 <ion-content>
 <div>
-  <ion-item>{{this.fullname}}</ion-item>
-  <ion-item>{{this.birthdate}}</ion-item>
+  <ion-item lines="none">Username: {{this.username}}</ion-item>
+  <ion-item lines="none">Fullname: {{this.fullname}}</ion-item>
+  <ion-item lines="none">Birthdate: {{this.birthdate}}</ion-item>
 </div>
 <ion-list>
-  <ion-item lines="none" *ngFor="let loc of location">Coordinates: {{loc.lat}}, {{loc.lng}}, {{loc.key}}<ion-button (click)="deleteLoc(loc)">Delete</ion-button></ion-item>
-  
+  <ion-item style="margin-top: 10px;" lines="none" *ngFor="let loc of location">
+    <ion-item lines="none">Last known coordinates: {{loc.lat}}, {{loc.lng}}</ion-item>
+    <ion-button (click)="deleteLoc(loc)">Delete</ion-button>
+  </ion-item>
+  <ion-item lines="none">Kesan pesan singkat: halo ^^</ion-item>
 </ion-list>
 </ion-content>
 

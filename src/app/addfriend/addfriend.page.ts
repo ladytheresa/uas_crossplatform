@@ -19,6 +19,7 @@ export class AddfriendPage implements OnInit {
   searchterm:string;
   validation_form: FormGroup;
   errorMessage: string='';
+  added:boolean=false;
 
   fusername:any;
   ffullname:any;
@@ -104,26 +105,37 @@ export class AddfriendPage implements OnInit {
           ))
         ).subscribe(data => {
           this.friend = data;
-          console.log(this.friend);
-          if(this.friend==null||this.friend.length==0){
+          //console.log(this.friend);
+          if(!this.added){
+            for(let alreadyfriend of this.friend){
+              console.log('masuk kesini');
+              if(alreadyfriend.key==key){
+                  console.log('already fren');
+                  this.alreadyfren();
+                  this.added=true;
+                  return;
+              }
+              else {
+                  this.nowfriends();
+                  console.log('gonna add this one');
+                  this.added=true;
+                  this.firebaseServ.addFriend(obj, key, this.userUID).then(res => {
+                  }).catch(error => console.log(error));      
+              } 
+            }  
+          }
+          if(this.friend.length==0){ 
             console.log('adding!');
             this.firebaseServ.addFriend(obj, key, this.userUID).then(res => {
-            }).catch(error => console.log(error));      
-          }
-          for(let alreadyfriend of this.friend){
-            if(alreadyfriend.key==key){
-              this.alreadyfren();
-            }
-            else {
-              console.log('gonna add this one');
-              this.firebaseServ.addFriend(obj, key, this.userUID).then(res => {
-              }).catch(error => console.log(error));      
-            }
-          }
+            }).catch(error => console.log(error));    
+            this.nowfriends();
+            this.added=true;  
+          }                  
         });
       });
-      
+      this.added=false;      
     }
+
     async nowfriends() {
       const toast = await this.toast.create({
         message: 'You are now friends!',
